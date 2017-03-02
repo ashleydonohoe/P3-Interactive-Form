@@ -10,6 +10,7 @@ const shirtDesign = $("#design");
 const shirtColor = $("#color");
 
 const activitiesSection = $(".activities");
+const activitiesList = $(".activities input");
 
 const paymentMethod = $("#payment");
 const creditCardInfo = $("#credit-card");
@@ -63,6 +64,16 @@ shirtDesign.on("change", function(e) {
     };
 });
 
+// React to activities list
+activitiesList.on("change", function(e) {
+    alert(this.name);
+    //Express and Frameworks workshops on same day
+
+    // Libraries and Node.js at same time
+
+
+});
+
 
 // Select credit card by default and hide the Bitcoin and PayPal notes
 paymentMethod.val("credit card");
@@ -87,13 +98,12 @@ paymentMethod.on("change", function(e) {
     }
 });
 
-
 // Validate form on submit
 form.on("submit", function(e) {
     e.preventDefault();
 
     // Resets the background color of the fields in case resubmitting to fix validation issues
-    $("input").css("background", "none");
+    $("input").css("background", "#c1deeb");
 
     // Checks name field is not empty
     if(nameTextField.val() === "")
@@ -119,13 +129,48 @@ form.on("submit", function(e) {
     }
 
     // If credit card is the selected option, check all the fields are present with required lengths
+    if(paymentMethod.val() === "credit card") {
+        // Check CC number is 13 OR 16 digits
 
+        if(isNumber(creditCardNumber)) {
+            if(!(creditCardNumber.val().length >= 13 && creditCardNumber.val().length <= 16)) {
+                alertField(creditCardNumber);
+            }
+        } else {
+            alertField(creditCardNumber);
+        }
 
+        // Check zip code is 5 digits
+        if(isNumber(creditCardZip)) {
+            if(!(checkLength(creditCardZip, 5))) {
+                alertField(creditCardZip);
+            }
+        } else {
+            alertField(creditCardZip);
+        }
+
+        // Check CVV is 3 digits
+
+        if(isNumber(creditCardCvv)) {
+            if(!(checkLength(creditCardCvv, 3))) {
+                alertField(creditCardCvv);
+            }
+        } else {
+            alertField(creditCardCvv);
+        }
+    }
+
+    function isNumber(input) {
+        return !(isNaN(input.val()));
+    }
+
+    function checkLength(input, length) {
+         return input.val().length === length;
+    }
 
     // Highlights input as red if invalid
     function alertField(element) {
         // Takes jQuery object and makes the background red
         element.css("background", "red");
     }
-
 });
