@@ -33,13 +33,44 @@ jobRole.on("change", function(e) {
     }
 });
 
+// When design changes, only show options suitable for theme
+shirtDesign.on("change", function(e) {
+    const valueChosen = this.value;
+    const options = $(shirtColor).children();
+    // if js puns, show cornflowerblue, darkslategrey, and gold
+    if(valueChosen === "js puns") {
+        for(var i = 0; i < options.length; i++) {
+            const option = $(options[i]);
+            const colorValue = options[i].value;
+            if(colorValue === "cornflowerblue" || colorValue === "darkslategrey" || colorValue === "gold") {
+                option.css("display", "inline-block");
+            } else {
+                option.css("display", "none");
+            }
+        }
+    } else if (valueChosen === "heart js") {
+        for(var i = 0; i < options.length; i++) {
+            const option = $(options[i]);
+            const colorValue = options[i].value;
+            if(colorValue === "tomato" || colorValue === "steelblue" || colorValue === "dimgrey") {
+                option.css("display", "inline-block");
+            } else {
+                option.css("display", "none");
+            }
+        };
+    };
+});
 
 
+// Validate form on submit
 form.on("submit", function(e) {
     e.preventDefault();
 
+    // Make sure name is not blank
     if(nameTextField.val() === "")
     {
         nameTextField.css("background-color", "red");
     }
+
+    // Check for valid email address format
 });
