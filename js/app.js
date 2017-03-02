@@ -66,11 +66,11 @@ shirtDesign.on("change", function(e) {
 form.on("submit", function(e) {
     e.preventDefault();
 
-    // Make sure name is not blank
-    if(nameTextField.val() === "")
-    {
-        nameTextField.css("background-color", "red");
+    // Name and email validation are handled through HTML5 attributes for "required"
+
+    // Check if at least one activity checkbox checked
+    if ($(".activities input:checked").length < 1 ){
+        activitiesSection.children("label").css("background", "red");
     }
 
-    // Check for valid email address format
 });
