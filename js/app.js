@@ -18,6 +18,8 @@ const creditCardZip = $("#zip");
 const creditCardCvv = $("#cvv");
 const creditCardExpMonth = $("#exp-month");
 const creditCardExpYear = $("#exp-year");
+const paypalInfo = $("#paypal-info");
+const bitcoinInfo = $("#bitcoin-info");
 
 // On page load, hide the custom title field. It will be displayed later if the user selects "Other"
 customTitle.hide();
@@ -60,6 +62,34 @@ shirtDesign.on("change", function(e) {
         };
     };
 });
+
+
+// Select credit card by default and hide the Bitcoin and PayPal notes
+paymentMethod.val("credit card");
+paypalInfo.hide();
+bitcoinInfo.hide();
+
+paymentMethod.on("change", function(e) {
+    const value = this.value;
+    if(value === "paypal") {
+        // User selects PayPal, hide CC and Bitcoin and show PayPal notice
+        creditCardInfo.hide();
+        bitcoinInfo.hide();
+        paypalInfo.show();
+    } else if (value === "bitcoin") {
+        creditCardInfo.hide();
+        paypalInfo.hide();
+        bitcoinInfo.show();
+    } else if (value === "credit card") {
+        creditCardInfo.show();
+        paypalInfo.hide();
+        bitcoinInfo.hide();
+    }
+});
+
+
+// User selects Bitcoin, hide CC and PayPal
+
 
 
 // Validate form on submit
