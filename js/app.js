@@ -88,19 +88,44 @@ paymentMethod.on("change", function(e) {
 });
 
 
-// User selects Bitcoin, hide CC and PayPal
-
-
-
 // Validate form on submit
 form.on("submit", function(e) {
     e.preventDefault();
 
-    // Name and email validation are handled through HTML5 attributes for "required"
+    // Resets the background color of the fields in case resubmitting to fix validation issues
+    $("input").css("background", "none");
+
+    // Checks name field is not empty
+    if(nameTextField.val() === "")
+    {
+        alertField(nameTextField);
+    }
+
+    // Checks for email address format
+    // // Check for valid email address format; adapted from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+    function checkEmail(email) {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+
+    const validEmail = checkEmail(emailTextField.val());
+    if(validEmail === false) {
+        alertField(emailTextField);
+    }
 
     // Check if at least one activity checkbox checked
     if ($(".activities input:checked").length < 1 ){
-        activitiesSection.children("label").css("background", "red");
+        alertField(activitiesSection.children("label"));
+    }
+
+    // If credit card is the selected option, check all the fields are present with required lengths
+
+
+
+    // Highlights input as red if invalid
+    function alertField(element) {
+        // Takes jQuery object and makes the background red
+        element.css("background", "red");
     }
 
 });
