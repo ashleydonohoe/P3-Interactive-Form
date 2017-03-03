@@ -27,6 +27,10 @@ const bitcoinInfo = $("#bitcoin-info");
 // On page load, hide the custom title field. It will be displayed later if the user selects "Other"
 customTitle.hide();
 
+// Hide the t-shirt color menu and label
+shirtColor.hide();
+shirtColor.parent().hide();
+
 // Remove isHidden class from the Total field
 priceArea.removeClass("is-hidden");
 
@@ -45,6 +49,8 @@ jobRole.on("change", function(e) {
 shirtDesign.on("change", function(e) {
     const valueChosen = this.value;
     const options = $(shirtColor).children();
+    shirtColor.show();
+    shirtColor.parent().show();
     // if js puns, show cornflowerblue, darkslategrey, and gold
     if(valueChosen === "js puns") {
         for(var i = 0; i < options.length; i++) {
