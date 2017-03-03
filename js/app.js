@@ -11,6 +11,7 @@ const shirtColor = $("#color");
 
 const activitiesSection = $(".activities");
 const activitiesList = $(".activities input");
+const priceArea = $("#price-area");
 
 const paymentMethod = $("#payment");
 const creditCardInfo = $("#credit-card");
@@ -24,6 +25,9 @@ const bitcoinInfo = $("#bitcoin-info");
 
 // On page load, hide the custom title field. It will be displayed later if the user selects "Other"
 customTitle.hide();
+
+// Remove isHidden class from the Total field
+
 
 
 // Job Role text field appears if user selects other
@@ -69,6 +73,8 @@ activitiesList.on("change", function(e) {
     const eventName = this.name;
     const checkedStatus = this.checked;
 
+    updateRunningTotal();
+
 
     // Restricts the options that occur at the same time and also toggles them
     applyRestrictions("express", "#js-frameworks");
@@ -97,6 +103,22 @@ activitiesList.on("change", function(e) {
         }
     }
 
+    function updateRunningTotal() {
+        var runningTotal = 0;
+        for(var i = 0; i < activitiesList.length; i++) {
+            const currentItem = $(activitiesList[i]);
+            const price = currentItem.data("price");
+
+            // if item is checked
+            if(currentItem.prop("checked")) {
+                runningTotal += price;
+            }
+        }
+
+        // Update running total on the page
+        console.log(runningTotal);
+
+    }
 });
 
 
