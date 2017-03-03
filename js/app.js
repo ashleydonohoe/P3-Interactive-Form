@@ -5,12 +5,12 @@ const emailTextField = $("#mail");
 const jobRole = $("#title");
 const customTitle = $("#other-title");
 
-const shirtSize = $("#size");
 const shirtDesign = $("#design");
 const shirtColor = $("#color");
 
 const activitiesSection = $(".activities");
 const activitiesList = $(".activities input");
+const activitiesError = $(".activities h3");
 const priceArea = $("#price-area");
 const total = $("#total");
 
@@ -19,8 +19,6 @@ const creditCardInfo = $("#credit-card");
 const creditCardNumber = $("#cc-num");
 const creditCardZip = $("#zip");
 const creditCardCvv = $("#cvv");
-const creditCardExpMonth = $("#exp-month");
-const creditCardExpYear = $("#exp-year");
 const paypalInfo = $("#paypal-info");
 const bitcoinInfo = $("#bitcoin-info");
 
@@ -81,7 +79,6 @@ activitiesList.on("change", function(e) {
     const checkedStatus = this.checked;
 
     updateRunningTotal();
-
 
     // Restricts the options that occur at the same time and also toggles them
     applyRestrictions("express", "#js-frameworks");
@@ -161,10 +158,9 @@ form.on("submit", function(e) {
     // Checks name field is not empty
     if(nameTextField.val() === "")
     {
-        alertField(nameTextField);
+        alertField(nameTextField, "Please enter your name");
     }
 
-    // Checks for email address format
     // // Check for valid email address format; adapted from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
     function checkEmail(email) {
         var re = /\S+@\S+\.\S+/;
@@ -173,21 +169,22 @@ form.on("submit", function(e) {
 
     const validEmail = checkEmail(emailTextField.val());
     if(validEmail === false) {
-        alertField(emailTextField);
+        alertField(emailTextField, "Please enter a valid email address");
     }
 
     // Check if at least one activity checkbox checked
     if ($(".activities input:checked").length < 1 ){
         alertField(activitiesSection.children("label"));
+        activitiesError.removeClass("is-hidden");
     }
 
     // If credit card is the selected option, check all the fields are present with required lengths
     if(paymentMethod.val() === "credit card") {
-        // Check CC number is 13 OR 16 digits
 
+        // Check CC number is 13 OR 16 digits
         if(isNumber(creditCardNumber)) {
             if(!(creditCardNumber.val().length >= 13 && creditCardNumber.val().length <= 16)) {
-                alertField(creditCardNumber);
+                alertField(creditCardNumber, "Must be 13 to 16 digits");
             }
         } else {
             alertField(creditCardNumber);
@@ -196,7 +193,7 @@ form.on("submit", function(e) {
         // Check zip code is 5 digits
         if(isNumber(creditCardZip)) {
             if(!(checkLength(creditCardZip, 5))) {
-                alertField(creditCardZip);
+                alertField(creditCardZip, "Must be 5 digits");
             }
         } else {
             alertField(creditCardZip);
@@ -206,7 +203,7 @@ form.on("submit", function(e) {
 
         if(isNumber(creditCardCvv)) {
             if(!(checkLength(creditCardCvv, 3))) {
-                alertField(creditCardCvv);
+                alertField(creditCardCvv, "Must be 3 digits");
             }
         } else {
             alertField(creditCardCvv);
@@ -222,8 +219,9 @@ form.on("submit", function(e) {
     }
 
     // Highlights input as red if invalid
-    function alertField(element) {
+    function alertField(element, error) {
         // Takes jQuery object and makes the background red
         element.css("border", "2px solid red");
+        element.attr("placeholder", error);
     }
 });
