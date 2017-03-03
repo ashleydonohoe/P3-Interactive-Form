@@ -218,6 +218,6 @@ form.on("submit", function(e) {
     // Highlights input as red if invalid
     function alertField(element) {
         // Takes jQuery object and makes the background red
-        element.css("background", "red");
+        element.css("border", "2px solid red");
     }
 });
