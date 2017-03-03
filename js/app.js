@@ -12,6 +12,7 @@ const shirtColor = $("#color");
 const activitiesSection = $(".activities");
 const activitiesList = $(".activities input");
 const priceArea = $("#price-area");
+const total = $("#total");
 
 const paymentMethod = $("#payment");
 const creditCardInfo = $("#credit-card");
@@ -27,7 +28,7 @@ const bitcoinInfo = $("#bitcoin-info");
 customTitle.hide();
 
 // Remove isHidden class from the Total field
-
+priceArea.removeClass("is-hidden");
 
 
 // Job Role text field appears if user selects other
@@ -116,8 +117,7 @@ activitiesList.on("change", function(e) {
         }
 
         // Update running total on the page
-        console.log(runningTotal);
-
+        total.text(runningTotal);
     }
 });
 
