@@ -113,6 +113,10 @@ button:hover {
 	background: #184c62;
 }
 
+.disabled {
+	text-decoration: line-through;
+}
+
 /* ================================= 
   Page Styles
 ==================================== */

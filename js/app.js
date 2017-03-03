@@ -66,11 +66,36 @@ shirtDesign.on("change", function(e) {
 
 // React to activities list
 activitiesList.on("change", function(e) {
-    alert(this.name);
-    //Express and Frameworks workshops on same day
+    const eventName = this.name;
+    const checkedStatus = this.checked;
 
-    // Libraries and Node.js at same time
 
+    // Restricts the options that occur at the same time and also toggles them
+    applyRestrictions("express", "#js-frameworks");
+    applyRestrictions("js-frameworks", "#express");
+    applyRestrictions("js-libs", "#node");
+    applyRestrictions("node", "#js-libs");
+
+    function applyRestrictions(targetEventName, elementToChange) {
+        if(eventName === targetEventName && checkedStatus) {
+            // If JS-Frameworks is not checked, update the UI to disable it
+            if(!($(elementToChange).prop("checked"))) {
+                updateUI(elementToChange, true, true);
+            }
+        } else if (eventName === targetEventName && !checkedStatus){
+            updateUI(elementToChange, false, false);
+        }
+    }
+
+    function updateUI(element, toAdd, status) {
+        $(element).prop("disabled", status);
+
+        if(toAdd) {
+            $(element).parent().addClass("disabled");
+        } else {
+            $(element).parent().removeClass("disabled");
+        }
+    }
 
 });
 
